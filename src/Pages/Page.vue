@@ -8,5 +8,6 @@
 import { Link } from '@inertiajs/vue3'
 const props = defineProps({
   value: String,
+  user: Object,
 })
 </script>

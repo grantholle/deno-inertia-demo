@@ -64,7 +64,9 @@ export class InertiaResponseFactory {
     <script type="module" src="/${manifestData["src/main.js"].file}"></script>
   </head>
   <body>
-    <div id="app" data-page='${JSON.stringify(this.getPageData(context.request))}'></div>
+    <div id="app" data-page='${
+      JSON.stringify(this.getPageData(context.request))
+    }'></div>
   </body>
 </html>`;
   }

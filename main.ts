@@ -8,18 +8,14 @@ import type { Next } from "@oak/oak/middleware";
 
 const inertia = new InertiaResponseFactory();
 const user = {
-  user: {
-    id: 1,
-    email: "grant@example.com",
-    name: "Grant",
-  },
+  id: 1,
+  email: "grant@example.com",
+  name: "Grant",
 };
 
 // Defined routes
 const router = new Router();
 router.get("/", (context: Context) => {
-  console.log(inertia)
-  context.response.status = 200
   inertia.render(context, "Index");
 });
 
@@ -36,6 +32,14 @@ app.use(logResponseTime);
 app.use(timer);
 
 // Serve static files from the build directory
+app.use(async (context: Context, next: Next) => {
+  inertia.share({
+    user,
+  });
+
+  await next();
+});
+
 app.use(staticFiles);
 
 // Add the routes for the app
@@ -43,14 +47,5 @@ app.use(router.routes());
 
 // Only allow certain methods
 app.use(router.allowedMethods());
-
-// app.use(async (context: Context, next: Next) => {
-//   inertia.share({
-//     user,
-//   });
-//   console.log('middle')
-
-//   await next();
-// });
 
 app.listen({ port: 8080 });
