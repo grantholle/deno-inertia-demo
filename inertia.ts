@@ -1,5 +1,6 @@
 import type { Context } from "@oak/oak/context";
 import manifestData from "./build/manifest.json" with { type: "json" };
+import type { Request } from "@oak/oak/request";
 
 export enum InertiaHeader {
   inertia = "x-inertia",
@@ -11,54 +12,50 @@ export enum InertiaHeader {
   partial_except = "x-inertia-partial-except",
 }
 
-export class InertiaResponse {
-  protected component: string;
-  protected props: object;
-  protected context: Context;
+export class InertiaResponseFactory {
+  protected component: string = "";
+  protected props: object = {};
   public sharedProps: object = {};
 
-  constructor(context: Context, component: string, props: object = {}) {
-    this.context = context;
-    this.component = component;
-    this.props = props;
-  }
-
-  public share(props: object): InertiaResponse {
+  public share(props: object): InertiaResponseFactory {
     this.sharedProps = {
       ...this.sharedProps,
       ...props,
-    }
+    };
 
     return this;
   }
 
-  public getPageData(): object {
+  public getPageData(request: Request): object {
     return {
       component: this.component,
       props: {
         ...this.sharedProps,
         ...this.props,
       },
-      url: this.context.request.url.pathname,
+      url: request.url.pathname,
       version: "1",
     };
   }
 
-  public toResponse() {
-    if (this.context.request.headers.has(InertiaHeader.inertia)) {
-      return this.toInertiaResponse();
+  public render(context: Context, component: string, props: object = {}) {
+    this.component = component;
+    this.props = props;
+
+    if (context.request.headers.has(InertiaHeader.inertia)) {
+      return this.toInertiaResponse(context);
     }
 
-    this.toHtmlResponse();
+    this.toHtmlResponse(context);
   }
 
-  public toInertiaResponse() {
-    this.context.response.headers.append(InertiaHeader.inertia, "true");
-    this.context.response.body = this.getPageData();
+  public toInertiaResponse(context: Context) {
+    context.response.headers.append(InertiaHeader.inertia, "true");
+    context.response.body = this.getPageData(context.request);
   }
 
-  public toHtmlResponse(): void {
-    this.context.response.body = `<!DOCTYPE html>
+  public toHtmlResponse(context: Context): void {
+    context.response.body = `<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -67,16 +64,8 @@ export class InertiaResponse {
     <script type="module" src="/${manifestData["src/main.js"].file}"></script>
   </head>
   <body>
-    <div id="app" data-page='${JSON.stringify(this.getPageData())}'></div>
+    <div id="app" data-page='${JSON.stringify(this.getPageData(context.request))}'></div>
   </body>
 </html>`;
   }
-}
-
-export function inertia(
-  context: Context,
-  component: string,
-  props: object = {},
-) {
-  new InertiaResponse(context, component, props).toResponse();
 }

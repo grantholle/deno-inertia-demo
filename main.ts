@@ -1,22 +1,30 @@
 import { Application } from "jsr:@oak/oak/application";
 import { Router } from "jsr:@oak/oak/router";
-import { inertia } from "./inertia.ts";
-import { timer, logResponseTime } from "./middleware/timer.ts";
-import { staticFiles } from './middleware/static.ts'
+import { InertiaResponseFactory } from "./inertia.ts";
+import { logResponseTime, timer } from "./middleware/timer.ts";
+import { staticFiles } from "./middleware/static.ts";
+import type { Context } from "@oak/oak/context";
+import type { Next } from "@oak/oak/middleware";
 
+const inertia = new InertiaResponseFactory();
+const user = {
+  user: {
+    id: 1,
+    email: "grant@example.com",
+    name: "Grant",
+  },
+};
+
+// Defined routes
 const router = new Router();
-router.get("/", (ctx) => {
-  inertia(ctx, "Index", {
-    user: {
-      id: 1,
-      email: "grant@example.com",
-      name: "Grant",
-    },
-  });
+router.get("/", (context: Context) => {
+  console.log(inertia)
+  context.response.status = 200
+  inertia.render(context, "Index");
 });
 
-router.get("/page", (ctx) => {
-  inertia(ctx, "Page", {
+router.get("/page", (context: Context) => {
+  inertia.render(context, "Page", {
     value: "Something",
   });
 });
@@ -30,7 +38,19 @@ app.use(timer);
 // Serve static files from the build directory
 app.use(staticFiles);
 
+// Add the routes for the app
 app.use(router.routes());
+
+// Only allow certain methods
 app.use(router.allowedMethods());
+
+// app.use(async (context: Context, next: Next) => {
+//   inertia.share({
+//     user,
+//   });
+//   console.log('middle')
+
+//   await next();
+// });
 
 app.listen({ port: 8080 });

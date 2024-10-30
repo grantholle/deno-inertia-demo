@@ -9,13 +9,18 @@ export async function timer(context: Context, next: Next): Promise<void> {
   context.response.headers.set("X-Response-Time", `${ms}ms`);
 }
 
-export async function logResponseTime(context: Context, next: Next): Promise<void> {
+export async function logResponseTime(
+  context: Context,
+  next: Next,
+): Promise<void> {
   await next();
   const rt = context.response.headers.get("X-Response-Time");
 
   if (rt) {
     console.log(
-      `${green(context.request.method)} ${cyan(context.request.url.pathname)} - ${
+      `${green(context.request.method)} ${
+        cyan(context.request.url.pathname)
+      } - ${
         bold(
           String(rt),
         )
