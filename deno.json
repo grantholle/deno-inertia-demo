@@ -11,6 +11,8 @@
     "@std/fmt": "jsr:@std/fmt@^1.0.3",
     "@vitejs/plugin-vue": "npm:@vitejs/plugin-vue@^5.1.4",
     "autoprefixer": "npm:autoprefixer@^10.4.20",
+    "just-omit": "npm:just-omit@^2.2.0",
+    "just-pick": "npm:just-pick@^4.2.0",
     "postcss": "npm:postcss@^8.4.47",
     "tailwindcss": "npm:tailwindcss@^3.4.14",
     "vite": "npm:vite@^5.4.10",

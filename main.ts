@@ -8,7 +8,7 @@ import type { Next } from "@oak/oak/middleware";
 
 const inertia = new InertiaResponseFactory();
 const user = {
-  id: 1,
+  id: "1",
   email: "grant@example.com",
   name: "Grant",
 };
@@ -21,7 +21,7 @@ router.get("/", (context: Context) => {
 
 router.get("/page", (context: Context) => {
   inertia.render(context, "Page", {
-    value: "Something",
+    value: crypto.randomUUID(),
   });
 });
 
@@ -33,6 +33,8 @@ app.use(timer);
 
 // Serve static files from the build directory
 app.use(async (context: Context, next: Next) => {
+  user.id = crypto.randomUUID();
+
   inertia.share({
     user,
   });

@@ -22,6 +22,10 @@
     "npm:@vitejs/plugin-vue@*": "5.1.4_vite@5.4.10__@types+node@22.5.4_vue@3.5.12_@types+node@22.5.4",
     "npm:@vitejs/plugin-vue@^5.1.4": "5.1.4_vite@5.4.10__@types+node@22.5.4_vue@3.5.12_@types+node@22.5.4",
     "npm:autoprefixer@^10.4.20": "10.4.20_postcss@8.4.47",
+    "npm:just-omit@*": "2.2.0",
+    "npm:just-omit@^2.2.0": "2.2.0",
+    "npm:just-pick@*": "4.2.0",
+    "npm:just-pick@^4.2.0": "4.2.0",
     "npm:path-to-regexp@6.2.1": "6.2.1",
     "npm:postcss@^8.4.47": "8.4.47",
     "npm:tailwindcss@*": "3.4.14_postcss@8.4.47",
@@ -772,6 +776,12 @@
     "jiti@1.21.6": {
       "integrity": "sha512-2yTgeWTWzMWkHu6Jp9NKgePDaYHbntiwvYuuJLbbN9vl7DC9DvXKOB2BC3ZZ92D3cvV/aflH0osDfwpHepQ53w=="
     },
+    "just-omit@2.2.0": {
+      "integrity": "sha512-Js7+HxDOGcB3RhI38Mird/RgyMf3t0DAJFda1QWqqlAKTa36NeSYIufJXxrZUbysFTRcTOFcoMCiFK5FwCoI7Q=="
+    },
+    "just-pick@4.2.0": {
+      "integrity": "sha512-m6bi0P/gFq5GEQJGYfHFsdod6fogViNIhsKbPBYavqF9SKFfMKPz7kf6ROL2PblkOdaib9vN/wJ7VXhCJre5Hw=="
+    },
     "lilconfig@2.1.0": {
       "integrity": "sha512-utWOt/GHzuUxnLKxB6dk81RoOeoNeHgbrXiuGk4yyF5qlRz+iIVWu56E2fqGHFrXz0QNUhLB/8nKqvRH66JKGQ=="
     },
@@ -1205,6 +1215,8 @@
       "npm:@inertiajs/vue3@^2.0.0-beta.2",
       "npm:@vitejs/plugin-vue@^5.1.4",
       "npm:autoprefixer@^10.4.20",
+      "npm:just-omit@^2.2.0",
+      "npm:just-pick@^4.2.0",
       "npm:postcss@^8.4.47",
       "npm:tailwindcss@^3.4.14",
       "npm:vite@^5.4.10",
