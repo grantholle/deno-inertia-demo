@@ -1,8 +1,8 @@
-import type { Context } from "jsr:@oak/oak/context";
+import type { Context } from "@oak/oak/context";
 import manifestData from "./build/manifest.json" with { type: "json" };
-import type { Request } from "jsr:@oak/oak/request";
-import pick from "npm:just-pick";
-import omit from "npm:just-omit";
+import type { Request } from "@oak/oak/request";
+import pick from "just-pick";
+import omit from "just-omit";
 
 export enum InertiaHeader {
   inertia = "x-inertia",
@@ -85,6 +85,13 @@ export class InertiaResponseFactory {
   public toHtmlResponse(context: Context): void {
     const entry = "src/main.js";
     const main = manifestData["src/main.js"];
+    const build = `${
+      main.css.map((path: string) => `<link rel="stylesheet" href="${path}">`)
+    }<script type="module" src="/${
+      manifestData["src/main.js"].file
+    }"></script>`;
+    const dev =
+      `<script type="module" src="http://localhost:5173/@vite/client"></script><script type="module" src="http://localhost:5173/src/main.js"></script>`;
 
     context.response.body = `<!DOCTYPE html>
 <html lang="en">
@@ -92,8 +99,7 @@ export class InertiaResponseFactory {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Deno + Inertia.js</title>
-    <script type="module" src="http://localhost:5173/@vite/client"></script>
-    <script type="module" src="http://localhost:5173/src/main.js"></script>
+    ${dev}
   </head>
   <body class="bg-gradient-to-r from-[#9553e9] to-[#6d74ed]">
     <div id="app" data-page='${

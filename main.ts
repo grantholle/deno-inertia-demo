@@ -1,5 +1,5 @@
-import { Application } from "jsr:@oak/oak/application";
-import { Router } from "jsr:@oak/oak/router";
+import { Application } from "@oak/oak/application";
+import { Router } from "@oak/oak/router";
 import { InertiaResponseFactory } from "./inertia.ts";
 import { logResponseTime, timer } from "./middleware/timer.ts";
 import { staticFiles } from "./middleware/static.ts";
