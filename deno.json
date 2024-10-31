@@ -5,11 +5,14 @@
     "serve": "deno run --watch --allow-net --allow-read main.ts"
   },
   "imports": {
-    "@inertiajs/vue3": "npm:@inertiajs/vue3@^1.2.0",
+    "@inertiajs/vue3": "npm:@inertiajs/vue3@^2.0.0-beta.2",
     "@oak/oak": "jsr:@oak/oak@^17.1.2",
     "@std/assert": "jsr:@std/assert@1",
     "@std/fmt": "jsr:@std/fmt@^1.0.3",
     "@vitejs/plugin-vue": "npm:@vitejs/plugin-vue@^5.1.4",
+    "autoprefixer": "npm:autoprefixer@^10.4.20",
+    "postcss": "npm:postcss@^8.4.47",
+    "tailwindcss": "npm:tailwindcss@^3.4.14",
     "vite": "npm:vite@^5.4.10",
     "vue": "npm:vue@^3.5.12"
   }

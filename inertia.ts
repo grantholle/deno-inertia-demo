@@ -1,6 +1,6 @@
-import type { Context } from "@oak/oak/context";
+import type { Context } from "jsr:@oak/oak/context";
 import manifestData from "./build/manifest.json" with { type: "json" };
-import type { Request } from "@oak/oak/request";
+import type { Request } from "jsr:@oak/oak/request";
 
 export enum InertiaHeader {
   inertia = "x-inertia",
@@ -55,15 +55,20 @@ export class InertiaResponseFactory {
   }
 
   public toHtmlResponse(context: Context): void {
+    const entry = "src/main.js";
+    const main = manifestData["src/main.js"]
+
     context.response.body = `<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Deno + Inertia.js</title>
-    <script type="module" src="/${manifestData["src/main.js"].file}"></script>
+    <!-- if development -->
+    <script type="module" src="http://localhost:5173/@vite/client"></script>
+    <script type="module" src="http://localhost:5173/src/main.js"></script>
   </head>
-  <body>
+  <body class="bg-gradient-to-r from-[#9553e9] to-[#6d74ed]">
     <div id="app" data-page='${
       JSON.stringify(this.getPageData(context.request))
     }'></div>
