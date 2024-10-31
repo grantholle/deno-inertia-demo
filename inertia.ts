@@ -56,7 +56,7 @@ export class InertiaResponseFactory {
 
   public toHtmlResponse(context: Context): void {
     const entry = "src/main.js";
-    const main = manifestData["src/main.js"]
+    const main = manifestData["src/main.js"];
 
     context.response.body = `<!DOCTYPE html>
 <html lang="en">
