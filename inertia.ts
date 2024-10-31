@@ -64,7 +64,6 @@ export class InertiaResponseFactory {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Deno + Inertia.js</title>
-    <!-- if development -->
     <script type="module" src="http://localhost:5173/@vite/client"></script>
     <script type="module" src="http://localhost:5173/src/main.js"></script>
   </head>

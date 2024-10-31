@@ -4,7 +4,7 @@
 
 - [x] Direct request
 - [x] Inertia request
-- [ ] Shared props
+- [x] Shared props
 - [ ] Partial requests
 - [ ] Only headers
 - [ ] Except headers
