@@ -6,8 +6,11 @@
   <Link href="/" class="inline-flex px-2 py-1 rounded bg-white">
     Back to index
   </Link>
+  <Link href="/page" :only="['value']" class="inline-flex px-2 py-1 rounded bg-white">
+    Reload value
+  </Link>
   <Link href="/page" :except="['value']" class="inline-flex px-2 py-1 rounded bg-white">
-    Partial reload
+    Exclude value
   </Link>
 </div>
 </template>
