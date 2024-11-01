@@ -6,21 +6,14 @@ import { staticFiles } from "./middleware/static.ts";
 import type { Context } from "@oak/oak/context";
 import type { Next } from "@oak/oak/middleware";
 
-const inertia = new InertiaResponseFactory();
-const user = {
-  id: "1",
-  email: "grant@example.com",
-  name: "Grant",
-};
-
 // Defined routes
 const router = new Router();
 router.get("/", (context: Context) => {
-  inertia.render(context, "Index");
+  context.state.inertia.render(context, "Index");
 });
 
 router.get("/page", (context: Context) => {
-  inertia.render(context, "Page", {
+  context.state.inertia.render(context, "Page", {
     value: crypto.randomUUID(),
   });
 });
@@ -31,11 +24,16 @@ const app = new Application();
 app.use(logResponseTime);
 app.use(timer);
 
-// Serve static files from the build directory
+// Set some Inertia share variables
 app.use(async (context: Context, next: Next) => {
-  user.id = crypto.randomUUID();
+  context.state.inertia = new InertiaResponseFactory();
+  const user = {
+    id: crypto.randomUUID(),
+    email: "grant@example.com",
+    name: "Grant",
+  };
 
-  inertia.share({
+  context.state.inertia.share({
     user,
   });
 
