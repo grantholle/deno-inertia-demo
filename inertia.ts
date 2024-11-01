@@ -84,14 +84,14 @@ export class InertiaResponseFactory {
 
   public toHtmlResponse(context: Context): void {
     const entry = "src/main.js";
-    const main = manifestData["src/main.js"];
+    const main = manifestData[entry];
     const build = `${
       main.css.map((path: string) => `<link rel="stylesheet" href="${path}">`)
     }<script type="module" src="/${
       manifestData["src/main.js"].file
     }"></script>`;
     const dev =
-      `<script type="module" src="http://localhost:5173/@vite/client"></script><script type="module" src="http://localhost:5173/src/main.js"></script>`;
+      `<script type="module" src="http://localhost:5173/@vite/client"></script><script type="module" src="http://localhost:5173/${entry}"></script>`;
 
     context.response.body = `<!DOCTYPE html>
 <html lang="en">
