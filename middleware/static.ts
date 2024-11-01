@@ -11,5 +11,13 @@ export async function staticFiles(context: Context, next: Next): Promise<void> {
     return;
   }
 
+  if (context.request.url.pathname.startsWith("/fonts")) {
+    console.log(blue(`Serving static file ${context.request.url.pathname}`));
+    await context.send({
+      "root": "./",
+    });
+    return;
+  }
+
   await next();
 }

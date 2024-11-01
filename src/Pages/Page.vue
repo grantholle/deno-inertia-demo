@@ -2,7 +2,7 @@
   <h1 class="text-2xl mb-2 font-medium">Other Page</h1>
   <pre class="bg-black rounded-md p-4 text-white mb-2">{{ props }}</pre>
 
-<div class="flex items-center gap-2">
+<div class="flex items-center gap-3">
   <Link href="/" class="inline-flex px-2 py-1 rounded bg-white">
     Back to index
   </Link>
