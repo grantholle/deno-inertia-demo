@@ -1,8 +1,8 @@
-import type { Context } from "@oak/oak/context";
+import type { Context } from "jsr:@oak/oak/context";
+import type { Request } from "jsr:@oak/oak/request";
 import manifestData from "./build/manifest.json" with { type: "json" };
-import type { Request } from "@oak/oak/request";
-import pick from "just-pick";
-import omit from "just-omit";
+import pick from "npm:just-pick";
+import omit from "npm:just-omit";
 
 export enum InertiaHeader {
   inertia = "x-inertia",
@@ -39,23 +39,25 @@ export class InertiaResponseFactory {
   }
 
   public isPartial(request: Request): boolean {
-    return request.headers.get(InertiaHeader.partial_component) ===
-      this.component;
+    return (
+      request.headers.get(InertiaHeader.partial_component) === this.component
+    );
   }
 
   public getProps(request: Request): object {
     const partial = this.isPartial(request);
 
-    const props = {
+    const props: object = {
       ...this.sharedProps,
       ...this.props,
     };
 
     if (partial && request.headers.get(InertiaHeader.partial_only)) {
-      const only = request.headers.get(InertiaHeader.partial_only).split(",");
+      const only: string[] =
+        request.headers.get(InertiaHeader.partial_only)?.split(",") || [];
 
-      return Object.entries(pick(props, only)).reduce(
-        (carry, [key, value]): object => {
+      return Object.entries(pick(props, only as never[])).reduce(
+        (carry: Record<string, any>, [key, value]): Record<string, any> => {
           if (typeof value === "function") {
             value = value();
           }
@@ -68,10 +70,9 @@ export class InertiaResponseFactory {
     }
 
     if (partial && request.headers.get(InertiaHeader.partial_except)) {
-      const except = request.headers.get(InertiaHeader.partial_except).split(
-        ",",
-      );
-      return omit(props, except);
+      const except: string[] =
+        request.headers.get(InertiaHeader.partial_except)?.split(",") || [];
+      return omit(props, except as never[]);
     }
 
     return props;
@@ -97,7 +98,9 @@ export class InertiaResponseFactory {
     const entry = "src/main.js";
     const main = manifestData[entry];
     const build = `${
-      main.css.map((path: string) => `<link rel="stylesheet" href="${path}">`)
+      main.css.map(
+        (path: string) => `<link rel="stylesheet" href="${path}">`,
+      )
     }<script type="module" src="/${
       manifestData["src/main.js"].file
     }"></script>`;
@@ -114,7 +117,9 @@ export class InertiaResponseFactory {
   </head>
   <body class="bg-gradient-to-r from-[#9553e9] to-[#6d74ed]">
     <div id="app" data-page='${
-      JSON.stringify(this.getPageData(context.request))
+      JSON.stringify(
+        this.getPageData(context.request),
+      )
     }'></div>
   </body>
 </html>`;

@@ -1,10 +1,10 @@
-import { Application } from "@oak/oak/application";
-import { Router } from "@oak/oak/router";
+import { Application } from "jsr:@oak/oak/application";
+import { Router } from "jsr:@oak/oak/router";
 import { InertiaResponseFactory } from "./inertia.ts";
 import { logResponseTime, timer } from "./middleware/timer.ts";
 import { staticFiles } from "./middleware/static.ts";
-import type { Context } from "@oak/oak/context";
-import type { Next } from "@oak/oak/middleware";
+import type { Context } from "jsr:@oak/oak/context";
+import type { Next } from "jsr:@oak/oak/middleware";
 
 // Defined routes
 const router = new Router();
