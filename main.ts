@@ -15,6 +15,7 @@ router.get("/", (context: Context) => {
 router.get("/page", (context: Context) => {
   context.state.inertia.render(context, "Page", {
     value: crypto.randomUUID(),
+    deferred: () => crypto.randomUUID(),
   });
 });
 

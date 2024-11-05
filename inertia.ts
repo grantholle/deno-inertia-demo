@@ -53,7 +53,15 @@ export class InertiaResponseFactory {
 
     if (partial && request.headers.get(InertiaHeader.partial_only)) {
       const only = request.headers.get(InertiaHeader.partial_only).split(",");
-      return pick(props, only);
+
+      return Object.entries(pick(props, only)).reduce((carry, [key, value]): object => {
+        if (typeof value === 'function') {
+          value = value()
+        }
+        carry[key] = value
+
+        return carry
+      }, {})
     }
 
     if (partial && request.headers.get(InertiaHeader.partial_except)) {
