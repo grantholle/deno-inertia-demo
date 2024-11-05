@@ -5,17 +5,5 @@
         <slot />
       </div>
     </main>
-
-    <!--<footer class="py-8 text-center text-sm text-white">-->
-    <!--  {{ props.user.id }}-->
-    <!--</footer>-->
   </div>
 </template>
-
-<script setup>
-import { computed } from 'vue'
-import { usePage } from '@inertiajs/vue3'
-
-const props = computed(() => usePage().props)
-</script>
-
